@@ -3,6 +3,7 @@
 # ktl to copy kubernetes config
 
 from client import RemoteClient
+from cert_handler import CertHandler
 import getpass
 import argparse
 
@@ -10,7 +11,17 @@ import argparse
 def main(hostname, username, ssh_key_file, passwd):
 
     # create certs for username
-    
+    key_file = CertHandler.generate_key(username, passwd)
+    csr_file = CertHandler.generate_certificate_signing_request(username, passwd, key_file)
+
+    # transfer csr to server
+
+
+    # sign csr to create certificate
+
+
+
+
 
 
 

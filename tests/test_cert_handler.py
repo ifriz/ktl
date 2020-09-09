@@ -1,22 +1,29 @@
 import unittest
 
-import os.path
-from os import path
+from pathlib import Path
 
 from cert_handler import CertHandler
 
+test_file_location = Path.cwd().joinpath("pki")
 
-class MyTestCase(unittest.TestCase):
-    def test_certificate_generations(self):
+def remove_test_files():
+    import shutil
+    shutil.rmtree(test_file_location)
 
-        CertHandler.generate_key("testuser", "testtest")
+class CertficateGenTestCase(unittest.TestCase):
+    def test_certificate_not_none(self):
+        key_file = CertHandler.generate_key("test_not_none", "test_not_none")
 
-        file_exists =
+        self.assertIsNotNone(key_file, "Certificate file doesn't exist")
 
-        self.
+    def test_certificate_signing_request_not_none(self):
+        key_file = CertHandler.generate_key("testuser", "testuser")
 
-        self.assertEqual(True, False)
+        csr_file = CertHandler.generate_certificate_signing_request("testuser_csr", "testuser", key_file)
+
+        self.assertIsNotNone(csr_file, "Certificate Signing Request file doesn't exist")
 
 
 if __name__ == '__main__':
+    remove_test_files()
     unittest.main()
